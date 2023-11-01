@@ -13,5 +13,13 @@
     "socket.io"
   ],
   "author": "nasim",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "sequelize": "^6.33.0",
+    "socket.io": "^4.7.2"
+  }
 }
