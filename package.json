@@ -1,0 +1,17 @@
+{
+  "name": "conversify",
+  "version": "1.0.0",
+  "description": "its a chat application using socket.io",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "react",
+    "socket.io"
+  ],
+  "author": "nasim",
+  "license": "MIT"
+}
