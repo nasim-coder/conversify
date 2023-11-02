@@ -2,7 +2,10 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3333;
 const db = require('./models/index');
-
+const router = require('./route/user.route');
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+app.use('/api', router);
 // db.sequelize
 //   .sync({ alter: true })
 //   .then(() => {
