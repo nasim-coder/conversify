@@ -24,7 +24,7 @@ exports.signin = async (req, res)=>{
     if(!isCorrct){
         return res.status(200).send({success: false, message: 'Incorrect password'});
     }
-    const token = sign({firstName: loginuser.firstName, email: loginuser.email}, process.env.secret, {expiresIn: "5h"});
+    const token = sign({id: loginuser.id, firstName: loginuser.firstName, email: loginuser.email}, process.env.secret, {expiresIn: "5h"});
     return res.status(200).send({success: true, message: 'loggedin successfully', token });
 
 }
