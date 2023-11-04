@@ -1,9 +1,9 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const sequelize = require('../models/index');
 module.exports = (sequelize, DataTypes) =>{
-class User extends Model {}
+class Message extends Model {}
 
-User.init({
+Message.init({
   message: {
     type: DataTypes.STRING,
     allowNull: false
@@ -13,5 +13,5 @@ User.init({
   sequelize, 
   modelName: 'Message' 
 });
-return User;
+return Message;
 }
