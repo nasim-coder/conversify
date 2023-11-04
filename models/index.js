@@ -24,6 +24,13 @@ try {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.user = require('./user')(sequelize, Sequelize);
+db.Users = require('./user')(sequelize, Sequelize);
+db.Message = require('./message')(sequelize, Sequelize);
+
+db.Users.hasMany(db.Message, {as: 'sentMessage', foreignKey: 'sender_id'} );
+db.Users.hasMany(db.Message, {as: 'recievedMessage', foreignKey: 'reciever_id'});
+
+db.Message.belongsTo(db.Users, {as: 'sender', foreignKey: 'sender_id'});
+db.Message.belongsTo(db.Users, {as: 'reciever', foreignKey: 'reciever_id'})
 
 module.exports = db;
