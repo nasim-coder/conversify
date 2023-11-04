@@ -5,7 +5,9 @@ const { isLoggedIn } = require('../middleware/auth');
 
 userRoute.post('/signup', controller.register);
 userRoute.post('/login', controller.signin);
-userRoute.get('/user-list',isLoggedIn, controller.userList);
-userRoute.get('/user-detail', controller.userDetails);
+userRoute.get('/list',isLoggedIn, controller.userList);
+userRoute.get('/detail', controller.userDetails);
 
 module.exports = userRoute;
+
+//GET /api/user/:userId/groups: Retrieve the list of groups a user is a member of.//
