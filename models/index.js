@@ -3,7 +3,6 @@
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
-const { GroupDetails } = require('../controller/group.controller');
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
@@ -38,6 +37,8 @@ db.Message.belongsTo(db.Users, {as: 'sender', foreignKey: 'sender_id'});
 db.Message.belongsTo(db.Users, {as: 'reciever', foreignKey: 'reciever_id'})
 
 db.GroupMembers.belongsTo(db.Users, {foreignKey: 'user_id'});
+
+db.Group.hasMany(db.GroupMembers, {foreignKey: 'group_id'})
 db.GroupMembers.belongsTo(db.Group, {foreignKey: 'group_id'});
 
 

@@ -1,8 +1,10 @@
-const { Users } = require('../models/index')
+const { Users } = require('../models/index');
 const { hash, compare } = require('bcrypt');
 const { sign } = require('jsonwebtoken');
 require('dotenv').config();
+
 exports.register = async (req, res)=>{
+   
     const { firstName, lastName, email, password } = req.body;
     const userFound = await Users.findOne({where:{ email}});
     if(userFound){
@@ -24,7 +26,7 @@ exports.signin = async (req, res)=>{
     if(!isCorrct){
         return res.status(200).send({success: false, message: 'Incorrect password'});
     }
-    const token = sign({id: loginuser.id, firstName: loginuser.firstName, email: loginuser.email}, process.env.secret, {expiresIn: "5h"});
+    const token = sign({id: loginuser.id, firstName: loginuser.firstName, email: loginuser.email}, process.env.secret, {expiresIn: "5d"});
     return res.status(200).send({success: true, message: 'loggedin successfully', token });
 
 }
