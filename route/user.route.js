@@ -10,4 +10,3 @@ userRoute.get('/detail', controller.userDetails);
 
 module.exports = userRoute;
 
-//GET /api/user/:userId/groups: Retrieve the list of groups a user is a member of.//
