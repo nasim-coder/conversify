@@ -87,7 +87,7 @@ exports.deleteGroup = async (req, res) => {
     if (id != user.user_id) {
         return res.status(403).send({ success: false, message: 'Unauthorized request' });
     }
-    const destroyGMem = await GroupMembers.destroy({ where:{group_id} });
+    const destroyGMem = await GroupMembers.destroy({ where: { group_id } });
     const destroyedGMessages = await Message.destroy({ where: { group_id } });
     const destroyGroup = await Group.destroy({
         where: {
@@ -99,7 +99,7 @@ exports.deleteGroup = async (req, res) => {
 
 exports.addMemeberInGroup = async (req, res) => {
     const { group_id } = req.query;
-    let {users} = req.body;
+    let { users } = req.body;
     const { id } = req.data;
     const user = await GroupMembers.findOne({
         where: {
@@ -115,12 +115,12 @@ exports.addMemeberInGroup = async (req, res) => {
     let arr = [];
     users.forEach(ele => { arr.push({ user_id: ele, group_id }) });
     const createdMemembers = await GroupMembers.bulkCreate(arr, { ignoreDuplicates: true });
-    return res.status(403).send({ success: false, message: 'user added succesfully', data: createdMemembers});
+    return res.status(403).send({ success: false, message: 'user added succesfully', data: createdMemembers });
 }
 
 exports.removeMemberFromGroup = async (req, res) => {
     const { group_id } = req.query;
-    let {users} = req.body;
+    let { users } = req.body;
     const { id } = req.data;
     const user = await GroupMembers.findOne({
         where: {
@@ -143,3 +143,15 @@ exports.removeMemberFromGroup = async (req, res) => {
     return res.status(200).send({ success: true, message: `${destroyed} userss have been removed` })
 }
 
+
+exports.groupList = async (req, res) => {
+    const { id } = req.data;
+    const groups = await GroupMembers.findAll({
+        attributes: ['id', 'isAdmin'],
+        where: {
+            user_id: id,
+        },
+        include: [{ model: Group, attributes: ['id', 'name'] }]
+    });
+    return res.status(200).send({ success: true, data: groups });
+}
