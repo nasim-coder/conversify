@@ -1,0 +1,49 @@
+
+.top-bar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+/* .login-link {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #390fd1;
+  border-radius: 5px;
+  text-decoration: none;
+  color: white;
+} */
+
+.login-link a {
+  color: white;
+  text-decoration: none;
+}
+
+.header>span{
+ font-size: 3rem;
+ font-weight: bold;
+ 
+}
+
+.slogan {
+  flex: 1; 
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  font-size: 2rem;
+}
+
+.landing-page {
+  background-color: rgb(34, 20, 224, 1); /* Fallback color */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-image: url('../../../public/asset/background-chat.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+  box-sizing: border-box;
+  
+}
