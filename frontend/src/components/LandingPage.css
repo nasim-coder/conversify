@@ -36,14 +36,14 @@
 }
 
 .landing-page {
-  background-color: rgb(34, 20, 224, 1); /* Fallback color */
+  background-color: #2214e0; /* Fallback color */
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-image: url('../../../public/asset/background-chat.jpg');
+  background-image: url('../../public/asset/background-chat.jpg');
   background-size: cover;
   background-position: center;
   padding: 20px;
   box-sizing: border-box;
-  
+  margin: 0;
 }
