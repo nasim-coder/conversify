@@ -1,6 +1,7 @@
 import React from 'react'
 import OnlineUsers from './OnlineUsers'
-import ChatHeader from './ChatHeader'
+import ChatHeader from './ChatHeader';
+import Chat from './Chat';
 import './Conversify.css'
 const Conversify = () => {
   return (
@@ -18,6 +19,7 @@ const Conversify = () => {
       </div>
 
       <div className='chat'>
+        <Chat />
       </div>
 
       <div className='online-users'>

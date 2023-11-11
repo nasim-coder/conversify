@@ -11,7 +11,6 @@ const onFinishFailed = (errorInfo) => {
 
 const RegisterForm = () => {
 
-
     return (
         <div>
             <Form
