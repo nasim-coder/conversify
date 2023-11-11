@@ -20,7 +20,7 @@ const LandingPage = () => {
           <span>Welcome to Conversify</span>
         </div>
         <div className="login-link">
-          <Button type="primary" onClick={() => dispatch(openLoginModal())}>Login</Button>
+          <Button className='btn-bg' onClick={() => dispatch(openLoginModal())}>Login</Button>
         </div>
       </div>
       <Modal

@@ -36,7 +36,7 @@
 }
 
 .landing-page {
-  background-color: #2214e0; /* Fallback color */
+  background-color: #2214e0;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -46,4 +46,9 @@
   padding: 20px;
   box-sizing: border-box;
   margin: 0;
+}
+
+.btn-bg {
+  background-color: #120338;
+  color: white
 }

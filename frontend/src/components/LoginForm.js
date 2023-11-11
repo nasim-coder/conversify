@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Checkbox, Form, Input, Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import RegisterForm from './RegisterForm';
 import {
   closeLoginModal,
@@ -9,41 +10,29 @@ import {
   closeRegistrationModal,
 } from '../redux/modalSlice';
 
-const onFinish = (values) => {
-  handleLogin(values);
-};
-
-const handleLogin = async (values) => {
-  try {
-    // Replace 'YOUR_LOGIN_API_ENDPOINT' with your actual API endpoint
-    const response = await axios.post('http://localhost:3333/api/user/login', {
-      email: values.email,
-      password: values.password,
-    });
-
-    // Check for a successful response
-    if (response.status === 200) {
-      // Optionally, you can handle the successful login here, e.g., set user credentials in Redux or local storage.
-      console.log('Login successful');
-    } else {
-      // Handle login error, e.g., show an error message.
-      console.log('Login failed');
-    }
-  } catch (error) {
-    // Handle the error, e.g., show an error message or log it.
-    console.error('An error occurred during login:', error);
-  }
-};
-
-
-const onFinishFailed = (errorInfo) => {
-  console.log('Failed:', errorInfo);
-};
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const onFinishFailed = (errorInfo) => { console.log('Failed:', errorInfo)};
   const isRegistrationModalOpen = useSelector((state) => state.modal.isRegistrationModalOpen);
-
+  const navigate = useNavigate()
+  const handleLogin = async (values) => {
+    try {
+      const response = await axios.post('http://localhost:3333/api/user/login', {
+        email: values.email,
+        password: values.password,
+      });
+      if (response.status === 200) {
+        const token = response.data.token;
+      localStorage.setItem('jwtToken', token);
+      navigate('/chat');
+      } else {
+        console.log('Login failed');
+      }
+    } catch (error) {
+      console.error('An error occurred during login:', error);
+    }
+  };
   return (
     <div>
       <Form
@@ -60,7 +49,7 @@ const LoginForm = () => {
         initialValues={{
           remember: true,
         }}
-        onFinish={onFinish}
+        onFinish={handleLogin}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
@@ -99,19 +88,18 @@ const LoginForm = () => {
           }}
         >
           <Checkbox>Remember me</Checkbox>
-          <Button type="primary" style={{ float: 'right' }} htmlType="submit">
+          <Button className='btn-bg' style={{ float: 'right' }} htmlType="submit">
             Login
           </Button>
         </Form.Item>
       </Form>
       <p>
         Don't have an account?{' '}
-        <Button
-          type="primary"
+        <Button className='btn-bg'
           size="small"
           onClick={() => {
-            dispatch(openRegistrationModal()); // Open the registration modal
-            dispatch(closeLoginModal()); // Close the login modal
+            dispatch(openRegistrationModal()); 
+            dispatch(closeLoginModal()); 
           }}
         >
           Register

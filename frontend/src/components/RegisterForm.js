@@ -1,11 +1,5 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
-// import { useDispatch, useSelector } from 'react-redux';
-// import {
-//   closeLoginModal,
-//   openRegistrationModal,
-//   closeRegistrationModal,
-// } from '../redux/modalSlice';
 
 const onFinish = (values) => {
     console.log('Success:', values);
@@ -93,7 +87,7 @@ const RegisterForm = () => {
                 <Form.Item 
                     wrapperCol={{ offset: 8, span: 16}}
                 >
-                    <Button style={{float: 'right'}} type="primary" htmlType="submit">
+                    <Button className='btn-bg' style={{float: 'right'}} htmlType="submit">
                         Register
                     </Button>
                 </Form.Item>
