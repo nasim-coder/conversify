@@ -34,7 +34,7 @@ exports.conversation = async (req, res) => {
             reciever_id
         },
         order: [['createdAt', 'DESC']],
-        include: [{ model: Users, as: 'sender', attributes: ['firstName', 'lastName'] }, { model: Users, as: 'reciever', attributes: ['firstName', 'lastName'] }]
+        include: [{ model: Users, as: 'sender', attributes: ['id','firstName', 'lastName'] }, { model: Users, as: 'reciever', attributes: ['id','firstName', 'lastName'] }]
     });
     return res.status(200).send({ success: true, data: conversation });
 }

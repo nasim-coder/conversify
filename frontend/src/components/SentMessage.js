@@ -1,17 +1,20 @@
 import React from 'react'
 
-const SentMessage = () => {
+const SentMessage = ({item}) => {
+
+  const {id, firstName, message} = item;
+  console.log('item', item);
   return (
     <div>
     <div style={{ display: 'flex', justifyContent: 'flex-end' , paddingRight:'10px'}}>
-    <span style={{fontWeight: 'bold'}}>Nasim</span>
+    <span style={{fontWeight: 'bold'}}>{firstName}</span>
     </div>
       <div style={{backgroundColor: 'white', padding: '10px', margin: '5px 10px 10px 10px', borderRadius: '50px 0px 50px 50px'}}>
       <div>
-          <span>Hello How are you</span>
+          <span>{message}</span>
       </div>
       <div>
-          <span>10:25pm</span>
+          <span style={{fontSize: '0.7rem'}}>10:25pm</span>
       </div>
       </div>
   </div>

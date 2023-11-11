@@ -33,7 +33,7 @@ exports.signin = async (req, res) => {
 
 exports.userList = async (req, res) => {
     const userslist = await Users.findAll({
-        attributes: ['firstName', 'lastName']
+        attributes: ['id','firstName', 'lastName']
     });
     res.status(200).send({ success: true, data: userslist });
 
