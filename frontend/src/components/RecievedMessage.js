@@ -1,11 +1,11 @@
 import React from 'react'
 
 const RecievedMessage = ({item}) => {
-  const {firstName, message, reciever,} = item;
+  const { message, sender,} = item;
   console.log('item', item);
   return (
     <div>
-      <span style={{paddingLeft: '10px', fontWeight: 'bold'}}>{reciever.firstName}</span>
+      <span style={{paddingLeft: '10px', fontWeight: 'bold'}}>{sender.firstName}</span>
         <div style={{backgroundColor: 'white', padding: '10px', margin: '5px 10px 10px 10px', borderRadius: '0 50px 50px 50px'}}>
         <div>
             <span>{message}</span>

@@ -2,12 +2,12 @@ import React from 'react'
 
 const SentMessage = ({item}) => {
 
-  const {id, firstName, message} = item;
+  const {id, sender, message} = item;
   console.log('item', item);
   return (
     <div>
     <div style={{ display: 'flex', justifyContent: 'flex-end' , paddingRight:'10px'}}>
-    <span style={{fontWeight: 'bold'}}>{firstName}</span>
+    <span style={{fontWeight: 'bold'}}>{sender.firstName}</span>
     </div>
       <div style={{backgroundColor: 'white', padding: '10px', margin: '5px 10px 10px 10px', borderRadius: '50px 0px 50px 50px'}}>
       <div>
