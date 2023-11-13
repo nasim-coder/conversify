@@ -2,36 +2,38 @@ import React, { useEffect, useState } from 'react';
 import RecievedMessage from './RecievedMessage';
 import SentMessage from './SentMessage';
 import { useSelector } from 'react-redux';
-import { Form, Input, Button } from 'antd'; // Import the Button component
+import { Form, Input, Button } from 'antd';
 import axios from 'axios';
-import { useForm } from 'antd/lib/form/Form';
-
+import { jwtDecode } from 'jwt-decode';
 
 const Chat = () => {
+  const token = localStorage.getItem('jwtToken');
+  const userdata = jwtDecode(token);
+
   const userId = useSelector((state) => state.modal.userId);
   const [conversationData, setConversationData] = useState([]);
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
-    // Handle sending the message here
     const message = values.message;
+    const response = await axios.post(`http://localhost:3333/api/message/send-message?reciever_id=${userId}`, {
+      message: message,
+    });
 
+    const newMessage = {
+      id: response.data.data.id,
+      message: response.data.data.message,
+      sender: {
+        id: response.data.data.sender_id,
+        firstName: userdata.firstName,
+        lastName: userdata.lastName,
+      },
+      reciever: null,
+    };
 
-   
-      const response = await axios.post(`http://localhost:3333/api/message/send-message?reciever_id=${userId}`, {
-      "message": message,
-    })
-   
-  console.log('response', response);
-    // Send the message to the server or perform the necessary action
-    // You can use axios.post to send the message to the server
+    setConversationData([...conversationData, newMessage]);
 
-    // After sending, you may want to update the conversationData state
-    // For now, I'll just update the state with the sent message
-    // setConversationData([...conversationData, { text: message, sender: { id: userId } });
-
-    // Clear the message input field
-    form.resetFields(); // Reset the form fields
+    form.resetFields();
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -54,8 +56,6 @@ const Chat = () => {
     fetchConversation();
   }, [userId]);
 
-  console.log('conversationData', conversationData);
-
   return (
     <div>
       <div style={{ backgroundColor: '#120338', borderTop: '2px solid white', height: '6vh', color: 'white', display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
@@ -63,10 +63,10 @@ const Chat = () => {
       </div>
       <ul style={{ listStyle: 'none', paddingInlineStart: '0px', marginBlockStart: '0', marginBlockEnd: '0' }}>
         {conversationData.map((elem, index) => {
-          if (elem.reciever.id === userId) {
+          if (elem.sender.id === userdata.id) {
             return (
               <li key={index}>
-                 <SentMessage item={elem} />
+                <SentMessage item={elem} />
               </li>
             );
           } else {
@@ -79,41 +79,42 @@ const Chat = () => {
         })}
       </ul>
 
+
+
+
       <div className='form-container'>
-        <Form
-          name="basic"
-          labelCol={{
-            span: 8,
-          }}
-          wrapperCol={{
-            span: 16,
-          }}
-          style={{
-            maxWidth: 600,
-          }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-          form={form} // Assign the form instance to the form variable
-        >
-          <Form.Item
-            name="message"
-            rules={[
-              {
-                required: true,
-                message: 'Please type your message!',
-              },
-            ]}
-          >
-          <Input placeholder="Please type your message" />
-          </Form.Item>
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
-              Send
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
+  <Form
+    name="basic"
+    onFinish={onFinish}
+    onFinishFailed={onFinishFailed}
+    autoComplete="off"
+    form={form}
+  >
+    <Form.Item
+      name="message"
+      rules={[
+        {
+          required: true,
+          message: 'Please type your message!',
+        },
+      ]}
+    >
+      <Input placeholder="Please type your message" />
+    </Form.Item>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <Form.Item style={{ flex: 1 }}>
+        <Button type="primary" htmlType="submit">
+          Send
+        </Button>
+      </Form.Item>
+    </div>
+  </Form>
+</div>
+
+
+
+
+
     </div>
   );
 };
