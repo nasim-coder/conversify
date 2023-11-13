@@ -1,3 +1,4 @@
+const {Op} = require('sequelize')
 const { Message, Users } = require('../models/index');
 
 exports.sendMessage = async (req, res) => {
@@ -30,10 +31,18 @@ exports.conversation = async (req, res) => {
     const conversation = await Message.findAll({
         attributes: ['id', 'message'],
         where: {
-            sender_id: id,
-            reciever_id
+            [Op.or]: [
+                {
+                  sender_id: id,
+                  reciever_id,
+                },
+                {
+                  sender_id: reciever_id,
+                  reciever_id: id,
+                },
+              ],
         },
-        order: [['createdAt', 'DESC']],
+        order: [['createdAt', 'ASC']],
         include: [{ model: Users, as: 'sender', attributes: ['id','firstName', 'lastName'] }, { model: Users, as: 'reciever', attributes: ['id','firstName', 'lastName'] }]
     });
     return res.status(200).send({ success: true, data: conversation });
