@@ -2,22 +2,26 @@ import React, { useEffect, useState } from 'react';
 import RecievedMessage from './RecievedMessage';
 import SentMessage from './SentMessage';
 import { useSelector } from 'react-redux';
-import { Form, Input, Button } from 'antd';
+import { Input, Button, Space } from 'antd';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
 const Chat = () => {
   const token = localStorage.getItem('jwtToken');
   const userdata = jwtDecode(token);
-
-  const userId = useSelector((state) => state.modal.userId);
+  const [messageInput, setMessageInput] = useState('');
+  const { userId, recieverName } = useSelector((state) => state.modal);
   const [conversationData, setConversationData] = useState([]);
-  const [form] = Form.useForm();
 
-  const onFinish = async (values) => {
-    const message = values.message;
+
+
+
+
+  const sendMessage = async (event) => {
+    event.preventDefault()
+    console.log('messageInput', messageInput);
     const response = await axios.post(`http://localhost:3333/api/message/send-message?reciever_id=${userId}`, {
-      message: message,
+      message: messageInput,
     });
 
     const newMessage = {
@@ -33,7 +37,7 @@ const Chat = () => {
 
     setConversationData([...conversationData, newMessage]);
 
-    form.resetFields();
+    setMessageInput('');
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -58,8 +62,8 @@ const Chat = () => {
 
   return (
     <div>
-      <div style={{ backgroundColor: '#120338', borderTop: '2px solid white', height: '6vh', color: 'white', display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-        <span>Nasim Ahmad</span>
+      <div style={{ backgroundColor: '#120338', borderTop: '2px solid white', height: '6vh', color: 'white', display: 'flex', alignItems: 'center'}}>
+        <span>{`Message with ${recieverName}`}</span>
       </div>
       <ul style={{ listStyle: 'none', paddingInlineStart: '0px', marginBlockStart: '0', marginBlockEnd: '0' }}>
         {conversationData.map((elem, index) => {
@@ -79,42 +83,19 @@ const Chat = () => {
         })}
       </ul>
 
-
-
-
-      <div className='form-container'>
-  <Form
-    name="basic"
-    onFinish={onFinish}
-    onFinishFailed={onFinishFailed}
-    autoComplete="off"
-    form={form}
-  >
-    <Form.Item
-      name="message"
-      rules={[
-        {
-          required: true,
-          message: 'Please type your message!',
-        },
-      ]}
-    >
-      <Input placeholder="Please type your message" />
-    </Form.Item>
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-      <Form.Item style={{ flex: 1 }}>
-        <Button type="primary" htmlType="submit">
-          Send
-        </Button>
-      </Form.Item>
-    </div>
-  </Form>
-</div>
-
-
-
-
-
+      <div className='form-container' style={{ margin: '50px' }}>
+        <form onSubmit={sendMessage}>
+          <Space.Compact style={{ width: '100%' }}>
+            <Input
+              placeholder='Type Message'
+              value={messageInput}
+              onChange={(event) => setMessageInput(event.target.value)}
+              required
+            />
+            <Button className='btn-bg' htmlType='submit'>Send</Button>
+          </Space.Compact>
+        </form>
+      </div>
     </div>
   );
 };

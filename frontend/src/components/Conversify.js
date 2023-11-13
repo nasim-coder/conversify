@@ -9,7 +9,7 @@ const Conversify = () => {
       <ChatHeader />
 
       <div className='chat-container'>
-
+      
       <div className='recent-chat-users'>
         <h2>Recent Chats</h2>
         <div className='scrollable'>
@@ -30,6 +30,7 @@ const Conversify = () => {
       </div>
 
       </div>
+      
     </div>
   )
 }

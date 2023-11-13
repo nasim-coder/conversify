@@ -15,8 +15,8 @@
   }
   
   .chat {
-    border-right: 1px solid black;
-    border-left: 1px solid black;
+    /* border-right: 1px solid black;
+    border-left: 1px solid black; */
     flex: 5;
     overflow-y: auto;
     background-image: url('../../public/asset/chat.jpg');
@@ -25,6 +25,7 @@
     box-sizing: border-box;
     margin: 0;
     box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
   }
   
   .online-users {

@@ -5,6 +5,7 @@ const initialState = {
   isLoginModalOpen: false,
   isRegistrationModalOpen: false,
   userId: 0,
+  recieverName: '',
 };
 
 const modalSlice = createSlice({
@@ -25,6 +26,9 @@ const modalSlice = createSlice({
     },
     changeId : (state, action)=>{
       state.userId = action.payload;
+    },
+    changeRecieverName: (state, action)=>{
+      state.recieverName = action.payload;
     }
   },
 });
@@ -34,7 +38,8 @@ export const {
   closeLoginModal,
   openRegistrationModal,
   closeRegistrationModal,
-  changeId
+  changeId,
+  changeRecieverName,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

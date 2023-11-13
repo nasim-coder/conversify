@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { List } from 'antd';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { changeId } from '../redux/modalSlice';
+import { changeId, changeRecieverName} from '../redux/modalSlice';
 
 const OnlineUsers = () => {
   const [userData, setUserData] = useState([]);
@@ -31,7 +31,10 @@ const dispatch = useDispatch();
         itemLayout="horizontal"
         dataSource={ userData }
         renderItem={(item, index) => (
-          <List.Item style={{paddingLeft: '1rem', cursor: 'pointer'}} onClick={()=>dispatch(changeId(item.id))}>
+          <List.Item style={{paddingLeft: '1rem', cursor: 'pointer'}} onClick={()=>{
+            dispatch(changeId(item.id));
+            dispatch(changeRecieverName(item.firstName));
+            }}>
             <div>
                 {item.firstName}
             </div>
