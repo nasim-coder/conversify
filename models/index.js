@@ -43,6 +43,6 @@ db.GroupMembers.belongsTo(db.Group, {foreignKey: 'group_id'});
 
 
 db.Group.hasMany(db.Message, { as: 'messages', foreignKey: 'group_id' });
-
+db.Message.belongsTo(db.Group, {foreignKey: 'group_id'})
 
 module.exports = db;

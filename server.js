@@ -27,4 +27,12 @@ io.on('connection', (socket) => {
     });
 });
 
+
+// db.sequelize.sync({ alter: true })
+//     .then(() => {
+//         console.log("Database altered successfully")
+//     }).catch((err) => {
+//         console.log("error", err.message)
+//  })
+
 server.listen(PORT, () => console.log(`Server is running on PORT: ${PORT}`));
