@@ -4,12 +4,14 @@ import './LandingPage.css';
 import { Button, Modal } from 'antd';
 import LoginForm from './LoginForm';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   openLoginModal,
   closeLoginModal,
 } from '../redux/modalSlice';
 
 const LandingPage = () => {
+  const navigate = useNavigate()
   const isLoginModalOpen = useSelector((state) => state.modal.isLoginModalOpen);
   const dispatch = useDispatch();
   
@@ -36,6 +38,7 @@ const LandingPage = () => {
       <div className='slogan'>
         <span>Connect and chat with friends in real-time!</span>
       </div>
+      <Button className='btn-bg' onClick={()=>navigate('/chat')}>Chat</Button>
     </div>
   );
 };

@@ -40,9 +40,6 @@ const Chat = () => {
     setMessageInput('');
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
 
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');

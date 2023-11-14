@@ -5,7 +5,7 @@ const SentMessage = ({ item }) => {
   const {sender, message } = item;
   console.log('item', item);
   return (
-    <div style={{ backgroundColor: '#130a8b30', padding: '0 10px 10px 10px', margin: '10px', borderRadius: '50px 0px 50px 50px' }}>
+    <div style={{ backgroundColor: '#5bff59b5', padding: '0 10px 10px 10px', margin: '10px', borderRadius: '50px 0px 50px 50px' }}>
       <div style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: '10px' }}>
         <span style={{ fontWeight: 'bold' }}>{sender.firstName}</span>
       </div>
