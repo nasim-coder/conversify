@@ -2,7 +2,10 @@ import React from 'react'
 import OnlineUsers from './OnlineUsers'
 import ChatHeader from './ChatHeader';
 import Chat from './Chat';
-import './Conversify.css'
+import './Conversify.css';
+import ChatList from './ChatList';
+
+
 const Conversify = () => {
   return (
     <div className="full-height">
@@ -13,7 +16,7 @@ const Conversify = () => {
       <div className='recent-chat-users'>
         <h2>Recent Chats</h2>
         <div className='scrollable'>
-        <OnlineUsers />
+        <ChatList />
         </div>
         
       </div>

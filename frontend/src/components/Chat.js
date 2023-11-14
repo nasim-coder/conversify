@@ -10,12 +10,8 @@ const Chat = () => {
   const token = localStorage.getItem('jwtToken');
   const userdata = jwtDecode(token);
   const [messageInput, setMessageInput] = useState('');
-  const { userId, recieverName } = useSelector((state) => state.modal);
+  const { userId, recieverName, isGroup } = useSelector((state) => state.modal);
   const [conversationData, setConversationData] = useState([]);
-
-
-
-
 
   const sendMessage = async (event) => {
     event.preventDefault()
@@ -47,7 +43,13 @@ const Chat = () => {
 
     const fetchConversation = async () => {
       try {
-        const response = await axios.get(`http://localhost:3333/api/message/conversation?reciever_id=${userId}`);
+        let response;
+        if(isGroup){
+          response = await axios.get(`http://localhost:3333/api/message/group-messages?group_id=${userId}`);
+        }else{
+          response = await axios.get(`http://localhost:3333/api/message/conversation?reciever_id=${userId}`);
+        }
+       
         setConversationData(response.data.data);
       } catch (error) {
         console.error('Error fetching online users:', error);

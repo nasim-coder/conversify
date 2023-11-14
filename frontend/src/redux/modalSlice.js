@@ -6,6 +6,7 @@ const initialState = {
   isRegistrationModalOpen: false,
   userId: 0,
   recieverName: '',
+  isGroup: false,
 };
 
 const modalSlice = createSlice({
@@ -29,7 +30,10 @@ const modalSlice = createSlice({
     },
     changeRecieverName: (state, action)=>{
       state.recieverName = action.payload;
-    }
+    },
+    changeIsGroup: (state)=>{
+      state.isGroup = true;
+    },
   },
 });
 
@@ -40,6 +44,7 @@ export const {
   closeRegistrationModal,
   changeId,
   changeRecieverName,
+  changeIsGroup,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;
