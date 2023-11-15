@@ -1,6 +1,6 @@
 // import React, { useState } from 'react';
 // import { Link } from 'react-router-dom';
-import './LandingPage.css'; 
+import './LandingPage.css';
 import { Button, Modal } from 'antd';
 import LoginForm from './LoginForm';
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,7 +14,7 @@ const LandingPage = () => {
   const navigate = useNavigate()
   const isLoginModalOpen = useSelector((state) => state.modal.isLoginModalOpen);
   const dispatch = useDispatch();
-  
+
   return (
     <div className='landing-page'>
       <div className='top-bar'>
@@ -30,7 +30,7 @@ const LandingPage = () => {
         open={isLoginModalOpen}
         closable={true}
         footer={null}
-        onCancel={()=>dispatch(closeLoginModal())}
+        onCancel={() => dispatch(closeLoginModal())}
         maskClosable={false}
       >
         <LoginForm />
@@ -38,7 +38,7 @@ const LandingPage = () => {
       <div className='slogan'>
         <span>Connect and chat with friends in real-time!</span>
       </div>
-      <Button className='btn-bg' onClick={()=>navigate('/chat')}>Chat</Button>
+      <Button className='btn-bg' onClick={() => navigate('/chat')}>Chat</Button>
     </div>
   );
 };

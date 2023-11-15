@@ -7,6 +7,6 @@ const store = configureStore({
     modal: modalReducer,
     // Add other reducers if needed
   },
-}); 
+});
 
 export default store;

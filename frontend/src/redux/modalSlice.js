@@ -25,13 +25,13 @@ const modalSlice = createSlice({
     closeRegistrationModal: (state) => {
       state.isRegistrationModalOpen = false;
     },
-    changeId : (state, action)=>{
+    changeId: (state, action) => {
       state.userId = action.payload;
     },
-    changeRecieverName: (state, action)=>{
+    changeRecieverName: (state, action) => {
       state.recieverName = action.payload;
     },
-    changeIsGroup: (state, action)=>{
+    changeIsGroup: (state, action) => {
       state.isGroup = action.payload;
     },
   },

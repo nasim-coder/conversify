@@ -13,7 +13,7 @@ import {
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const onFinishFailed = (errorInfo) => { console.log('Failed:', errorInfo)};
+  const onFinishFailed = (errorInfo) => { console.log('Failed:', errorInfo) };
   const isRegistrationModalOpen = useSelector((state) => state.modal.isRegistrationModalOpen);
   const navigate = useNavigate()
   const handleLogin = async (values) => {
@@ -24,8 +24,8 @@ const LoginForm = () => {
       });
       if (response.status === 200) {
         const token = response.data.token;
-      localStorage.setItem('jwtToken', token);
-      navigate('/chat');
+        localStorage.setItem('jwtToken', token);
+        navigate('/chat');
       } else {
         console.log('Login failed');
       }
@@ -98,8 +98,8 @@ const LoginForm = () => {
         <Button className='btn-bg'
           size="small"
           onClick={() => {
-            dispatch(openRegistrationModal()); 
-            dispatch(closeLoginModal()); 
+            dispatch(openRegistrationModal());
+            dispatch(closeLoginModal());
           }}
         >
           Register

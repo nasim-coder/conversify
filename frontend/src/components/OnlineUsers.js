@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { List } from 'antd';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { changeId, changeRecieverName, changeIsGroup} from '../redux/modalSlice';
+import { changeId, changeRecieverName, changeIsGroup } from '../redux/modalSlice';
 
 const OnlineUsers = () => {
   const [userData, setUserData] = useState([]);
   const token = localStorage.getItem('jwtToken');
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
   useEffect(() => {
     const fetchOnlineUsers = async () => {
       try {
@@ -26,18 +26,18 @@ const dispatch = useDispatch();
 
   return (
     <div>
-        
+
       <List
         itemLayout="horizontal"
-        dataSource={ userData }
+        dataSource={userData}
         renderItem={(item, index) => (
-          <List.Item style={{paddingLeft: '1rem', cursor: 'pointer'}} onClick={()=>{
+          <List.Item style={{ paddingLeft: '1rem', cursor: 'pointer' }} onClick={() => {
             dispatch(changeId(item.id));
             dispatch(changeRecieverName(item.firstName));
             dispatch(changeIsGroup(false));
-            }}>
+          }}>
             <div>
-                {item.firstName}
+              {item.firstName}
             </div>
           </List.Item>
         )}

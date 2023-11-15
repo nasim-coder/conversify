@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { List } from 'antd';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { changeId, changeIsGroup, changeRecieverName} from '../redux/modalSlice';
+import { changeId, changeIsGroup, changeRecieverName } from '../redux/modalSlice';
 
 const ChatList = () => {
   const [userData, setUserData] = useState([]);
   const token = localStorage.getItem('jwtToken');
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
   useEffect(() => {
     const fetchRecentChats = async () => {
       try {
@@ -26,22 +26,22 @@ const dispatch = useDispatch();
 
   return (
     <div>
-        
+
       <List
         itemLayout="horizontal"
-        dataSource={ userData }
+        dataSource={userData}
         renderItem={(item, index) => (
-          <List.Item style={{paddingLeft: '1rem', cursor: 'pointer'}} onClick={()=>{
+          <List.Item style={{ paddingLeft: '1rem', cursor: 'pointer' }} onClick={() => {
             dispatch(changeId(item.counterpart.id));
-            dispatch(changeRecieverName(item.counterpart.firstName || item.counterpart.name ));
-            if(item.isGroup){
+            dispatch(changeRecieverName(item.counterpart.firstName || item.counterpart.name));
+            if (item.isGroup) {
               dispatch(changeIsGroup(true))
-            }else{
+            } else {
               dispatch(changeIsGroup(false))
             }
-            }}>
+          }}>
             <div>
-                {item.counterpart.name}
+              {item.counterpart.name}
             </div>
           </List.Item>
         )}

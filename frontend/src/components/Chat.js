@@ -17,16 +17,16 @@ const Chat = () => {
     event.preventDefault()
     console.log('messageInput', messageInput);
     let response;
-    if(isGroup){
+    if (isGroup) {
       response = await axios.post(`http://localhost:3333/api/message/send-message?group_id=${userId}`, {
         message: messageInput,
       });
-    }else{
+    } else {
       response = await axios.post(`http://localhost:3333/api/message/send-message?reciever_id=${userId}`, {
         message: messageInput,
       });
     }
-    
+
 
     const newMessage = {
       id: response.data.data.id,
@@ -52,12 +52,12 @@ const Chat = () => {
     const fetchConversation = async () => {
       try {
         let response;
-        if(isGroup){
+        if (isGroup) {
           response = await axios.get(`http://localhost:3333/api/message/group-messages?group_id=${userId}`);
-        }else{
+        } else {
           response = await axios.get(`http://localhost:3333/api/message/conversation?reciever_id=${userId}`);
         }
-       
+
         setConversationData(response.data.data);
       } catch (error) {
         console.error('Error fetching online users:', error);
@@ -69,7 +69,7 @@ const Chat = () => {
 
   return (
     <div>
-      <div style={{ backgroundColor: '#120338', borderTop: '2px solid white', height: '6vh', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <div style={{ backgroundColor: '#120338', borderTop: '2px solid white', height: '6vh', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <span>{`Message with ${recieverName}`}</span>
       </div>
       <ul style={{ listStyle: 'none', paddingInlineStart: '0px', marginBlockStart: '0', marginBlockEnd: '0' }}>

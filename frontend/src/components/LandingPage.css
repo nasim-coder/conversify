@@ -1,5 +1,4 @@
-
-.top-bar{
+.top-bar {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -12,17 +11,17 @@
   text-decoration: none;
 }
 
-.header>span{
- font-size: 3rem;
- font-weight: bold;
- color: #120338;
+.header>span {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #120338;
 }
 
 .slogan {
-  flex: 1; 
+  flex: 1;
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   font-size: 2rem;
   color: #120338;
 }
@@ -50,13 +49,14 @@ label {
   color: #120338 !important;
 }
 
-.ant-modal-title{
+.ant-modal-title {
   color: #120338 !important;
 }
 
-.ant-checkbox-inner{
+.ant-checkbox-inner {
   background-color: #120338 !important;
 }
+
 .ant-input:focus {
   border-color: #120338;
 }
