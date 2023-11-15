@@ -1,4 +1,4 @@
-const {Op} = require('sequelize')
+const { Op } = require('sequelize')
 const { Message, Users, Group, GroupMembers } = require('../models/index');
 
 exports.sendMessage = async (req, res) => {
@@ -33,17 +33,17 @@ exports.conversation = async (req, res) => {
         where: {
             [Op.or]: [
                 {
-                  sender_id: id,
-                  reciever_id,
+                    sender_id: id,
+                    reciever_id,
                 },
                 {
-                  sender_id: reciever_id,
-                  reciever_id: id,
+                    sender_id: reciever_id,
+                    reciever_id: id,
                 },
-              ],
+            ],
         },
         order: [['createdAt', 'ASC']],
-        include: [{ model: Users, as: 'sender', attributes: ['id','firstName', 'lastName'] }, { model: Users, as: 'reciever', attributes: ['id','firstName', 'lastName'] }]
+        include: [{ model: Users, as: 'sender', attributes: ['id', 'firstName', 'lastName'] }, { model: Users, as: 'reciever', attributes: ['id', 'firstName', 'lastName'] }]
     });
     return res.status(200).send({ success: true, data: conversation });
 }

@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       ],
     }
-    
-    );
+
+  );
   return GroupMembers;
 }
