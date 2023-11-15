@@ -1,5 +1,5 @@
 const {Op} = require('sequelize')
-const { Message, Users, Group } = require('../models/index');
+const { Message, Users, Group, GroupMembers } = require('../models/index');
 
 exports.sendMessage = async (req, res) => {
     const { group_id, reciever_id } = req.query;
@@ -19,7 +19,7 @@ exports.retrieveGroupMessages = async (req, res) => {
             group_id
         },
         include: [{ model: Users, as: 'sender', attributes: ['id', 'firstName', 'lastName'] }],
-        order: [['createdAt', 'DESC']],
+        order: [['createdAt', 'ASC']],
     });
 
     return res.status(200).send({ success: true, data: messages })
@@ -65,67 +65,77 @@ exports.deleteMessage = async (req, res) => {
 
 exports.recentConversationsList = async (req, res) => {
     const { id } = req.data;
-  
-    try {
-      const recentConversations = await Message.findAll({
+    let groupArr = [];
+
+    // Fetch all groups the user is a member of
+    const groups = await GroupMembers.findAll({
+        attributes: ['group_id'],
         where: {
-          [Op.or]: [
-            { sender_id: id },
-            { reciever_id: id },
-          ],
-        },
-        include: [{ model: Users, as: 'sender' }, { model: Users, as: 'reciever' }, { model: Group }],
-        order: [['createdAt', 'DESC']],
-        limit: 10,
-      });
-  
-      const conversationMap = new Map();
-  
-      recentConversations.forEach((conversation) => {
-        let counterpart = null;
-        let isGroup = false;
-  
-        if (conversation.sender_id === conversation.reciever_id) {
-          counterpart = {
-            id: id,
-            name: 'Yourself',
-          };
-        } else if (conversation.group_id) {
-          counterpart = {
-            id: conversation.group_id,
-            name: conversation.Group.name,
-          };
-          isGroup = true;
-        } else if (conversation.sender_id === id) {
-          counterpart = {
-            id: conversation.reciever_id,
-            name: conversation.reciever.firstName,
-          };
-        } else {
-          counterpart = {
-            id: conversation.sender_id,
-            name: conversation.sender.firstName,
-          };
+            user_id: id
         }
-  
-        const counterpartID = counterpart.id;
-        if (!conversationMap.has(counterpartID)) {
-          conversationMap.set(counterpartID, {
-            id: conversation.id,
-            counterpart,
-            isGroup,
-            lastMessage: conversation.message,
-            timestamp: conversation.createdAt,
-          });
-        }
-      });
-  
-      const conversationList = Array.from(conversationMap.values());
-  
-      res.status(200).send({ success: true, data: conversationList });
+    });
+
+    groupArr = groups.map(element => element.group_id);
+
+    try {
+        // Fetch messages involving the user as sender, receiver, or part of a group
+        const messages = await Message.findAll({
+            where: {
+                [Op.or]: {
+                    sender_id: id,
+                    reciever_id: id,
+                    group_id: groupArr,
+                }
+            },
+            include: [
+                { model: Users, as: 'sender' },
+                { model: Users, as: 'reciever' },
+                { model: Group }
+            ]
+        });
+
+        const conversationMap = new Map();
+
+        messages.forEach((message) => {
+            let counterpart = null;
+            let isGroup = false;
+
+            if (message.sender_id === id && message.reciever_id === id) {
+                counterpart = {
+                    id: id,
+                    name: 'Yourself',
+                };
+            } else if (message.group_id) {
+                counterpart = {
+                    id: message.group_id,
+                    name: message.Group.name,
+                };
+                isGroup = true;
+            } else {
+                const otherUserId = message.sender_id === id ? message.reciever_id : message.sender_id;
+                counterpart = {
+                    id: otherUserId,
+                    name: message.sender_id === id ? message.reciever.firstName : message.sender.firstName,
+                };
+            }
+
+            const counterpartID = counterpart.id;
+            if (!conversationMap.has(counterpartID)) {
+                conversationMap.set(counterpartID, {
+                    counterpart,
+                    isGroup,
+                    lastMessage: message.message,
+                    timestamp: message.createdAt,
+                });
+            }
+        });
+
+        const conversationList = Array.from(conversationMap.values());
+
+        res.status(200).send({ success: true, data: conversationList });
     } catch (error) {
-      console.error("Error fetching recent conversations:", error);
-      res.status(500).send({ success: false, error: "Server error" });
+        console.error("Error fetching recent conversations:", error);
+        res.status(500).send({ success: false, error: "Server error" });
     }
-  };
-  
+};
+;

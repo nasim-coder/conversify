@@ -16,9 +16,17 @@ const Chat = () => {
   const sendMessage = async (event) => {
     event.preventDefault()
     console.log('messageInput', messageInput);
-    const response = await axios.post(`http://localhost:3333/api/message/send-message?reciever_id=${userId}`, {
-      message: messageInput,
-    });
+    let response;
+    if(isGroup){
+      response = await axios.post(`http://localhost:3333/api/message/send-message?group_id=${userId}`, {
+        message: messageInput,
+      });
+    }else{
+      response = await axios.post(`http://localhost:3333/api/message/send-message?reciever_id=${userId}`, {
+        message: messageInput,
+      });
+    }
+    
 
     const newMessage = {
       id: response.data.data.id,
@@ -57,7 +65,7 @@ const Chat = () => {
     };
 
     fetchConversation();
-  }, [userId]);
+  }, [userId, isGroup]);
 
   return (
     <div>

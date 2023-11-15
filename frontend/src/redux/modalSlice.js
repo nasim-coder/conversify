@@ -31,8 +31,8 @@ const modalSlice = createSlice({
     changeRecieverName: (state, action)=>{
       state.recieverName = action.payload;
     },
-    changeIsGroup: (state)=>{
-      state.isGroup = true;
+    changeIsGroup: (state, action)=>{
+      state.isGroup = action.payload;
     },
   },
 });

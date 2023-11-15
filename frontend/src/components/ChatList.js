@@ -33,8 +33,12 @@ const dispatch = useDispatch();
         renderItem={(item, index) => (
           <List.Item style={{paddingLeft: '1rem', cursor: 'pointer'}} onClick={()=>{
             dispatch(changeId(item.counterpart.id));
-            dispatch(changeRecieverName(item.counterpart?.firstName || item.counterpart?.name ));
-            if(item.isGroup){dispatch(changeIsGroup())};
+            dispatch(changeRecieverName(item.counterpart.firstName || item.counterpart.name ));
+            if(item.isGroup){
+              dispatch(changeIsGroup(true))
+            }else{
+              dispatch(changeIsGroup(false))
+            }
             }}>
             <div>
                 {item.counterpart.name}
