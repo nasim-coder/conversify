@@ -14,7 +14,7 @@ const Conversify = () => {
       <div className='chat-container'>
       
       <div className='recent-chat-users'>
-        <h2>Recent Chats</h2>
+        <div style={{ backgroundColor: '#120338', borderRight: '2px solid white', borderTop: '2px solid white', height: '6vh', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><span>Recent Chats</span></div>
         <div className='scrollable'>
         <ChatList />
         </div>
@@ -26,7 +26,7 @@ const Conversify = () => {
       </div>
 
       <div className='online-users'>
-      <h2>Online Users</h2>
+      <div style={{ backgroundColor: '#120338', borderLeft: '2px solid white', borderTop: '2px solid white', height: '6vh', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><span>Online Users</span></div>
         <div className='scrollable'>
         <OnlineUsers />
         </div>

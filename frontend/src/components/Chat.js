@@ -69,7 +69,7 @@ const Chat = () => {
 
   return (
     <div>
-      <div style={{ backgroundColor: '#120338', borderTop: '2px solid white', height: '6vh', color: 'white', display: 'flex', alignItems: 'center'}}>
+      <div style={{ backgroundColor: '#120338', borderTop: '2px solid white', height: '6vh', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <span>{`Message with ${recieverName}`}</span>
       </div>
       <ul style={{ listStyle: 'none', paddingInlineStart: '0px', marginBlockStart: '0', marginBlockEnd: '0' }}>
