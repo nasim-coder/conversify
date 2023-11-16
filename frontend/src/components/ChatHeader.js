@@ -6,9 +6,12 @@ const ChatHeader = () => {
     <div
       style={{
         fontSize: '2rem',
-        textAlign: 'center',
         backgroundColor: '#120338',
         color: 'white',
+        display: 'flex',
+        // alignItems: 'center',
+        justifyContent: 'left',
+        paddingLeft: '10px'
       }}
     >
       <span>Conversify</span>

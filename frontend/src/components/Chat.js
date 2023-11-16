@@ -5,16 +5,54 @@ import { useSelector } from 'react-redux';
 import { Input, Button, Space } from 'antd';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import io from 'socket.io-client';
+
 
 const Chat = () => {
+  const [socket, setSocket] = useState(null);
   const token = localStorage.getItem('jwtToken');
   const userdata = jwtDecode(token);
   const [messageInput, setMessageInput] = useState('');
   const { userId, recieverName, isGroup } = useSelector((state) => state.modal);
   const [conversationData, setConversationData] = useState([]);
 
+
+
+  useEffect(() => {
+    // Establish connection with Socket.io server
+    const newSocket = io('http://localhost:3333'); 
+
+    newSocket.on('connect', () => {
+      console.log('Connected to server');
+    });
+
+    newSocket.on('chat_message', (msg) => {
+      const newMessage = {
+        id: msg.data.data.id,
+        message: msg.data.data.message,
+        sender: {
+          id: msg.data.data.sender_id,
+          firstName: userdata.firstName,
+          lastName: userdata.lastName,
+        },
+        reciever: null,
+      };
+      setConversationData((prevData) => [...prevData, newMessage]); // Add received message to conversationData
+    });
+
+    setSocket(newSocket);
+
+    return () => {
+      newSocket.disconnect(); // Disconnect socket when component unmounts
+    };
+  }, []);
+
+
   const sendMessage = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
+    if (socket) {
+      socket.emit('chat_message', { message: messageInput }); // Emit 'chat message' event
+    }
     console.log('messageInput', messageInput);
     let response;
     if (isGroup) {
