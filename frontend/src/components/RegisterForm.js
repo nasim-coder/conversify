@@ -1,15 +1,38 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const onFinish = (values) => {
-    console.log('Success:', values);
-};
 
 const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
 };
 
 const RegisterForm = () => {
+
+    const navigate = useNavigate()
+
+    const handleRegister = async (values) => {
+    
+        try {
+            const response = await axios.post('http://localhost:3333/api/user/signup', {
+              firstName: values.firstName,
+              lastName: values.lastName,
+            email: values.email,
+              password: values.password,
+            });
+            if (response.status === 201) {
+              const token = response.data.token;
+              localStorage.setItem('jwtToken', token);
+              navigate('/chat');
+            } else {
+              console.log('Login failed');
+            }
+          } catch (error) {
+            console.error('An error occurred during login:', error);
+          }
+    };
+    
 
     return (
         <div>
@@ -19,7 +42,7 @@ const RegisterForm = () => {
                 wrapperCol={{ span: 16 }}
                 style={{ maxWidth: 600 }}
                 initialValues={{ remember: true }}
-                onFinish={onFinish}
+                onFinish={handleRegister}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
             >
